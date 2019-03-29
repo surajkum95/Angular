@@ -1,0 +1,9 @@
+Students Info :-
+
+<ul ng-repeat="student in stdCtrl.students">
+   <a href="students/{{student.id}}">
+    <li>{{student.name}}</li>
+    </a>
+</ul>
+
+<button ng-click="stdCtrl.reloadStudentsDetails()">Refresh</button>

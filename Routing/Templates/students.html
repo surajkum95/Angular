@@ -1,0 +1,9 @@
+Students Info :-
+
+<input type="text" ng-model="studentName" placeholder="Search Student ..." />
+<button ng-click="searchStudent()">Search</button>
+<ul ng-repeat="student in students">
+   <a href="students/{{student.id}}">
+    <li>{{student.name}}</li>
+    </a>
+</ul>

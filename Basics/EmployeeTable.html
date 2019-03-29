@@ -1,0 +1,23 @@
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="employee1 in employeeIncL">
+            <td> {{employee1.name}} </td>
+            <td> {{employee1.gender}} </td>
+            <td> {{employee1.salary}} </td>
+        </tr>
+    </tbody>
+</table>
+<ul ng-repeat="employeeListInclude in employees">
+    <li>{{employeeListInclude.name}}</li>
+        <ul >
+            <li> {{employeeListInclude.gender}} </li>
+            <li> {{employeeListInclude.salary}} </li>
+        </ul>
+</ul>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app = "syntaxModule">
+    <head>
+        <base href="/" />
+        <script src="Scripts/angular.min.js"></script>
+        <script src="Scripts/angular-route.min.js"></script>
+        <link rel="stylesheet" href="Scripts/Style.css">
+        <script src="Scripts/script.js"></script>
+    </head>
+    <body>
+        <div ng-controller="withoutSyntaxControllerCountry">
+            {{name}}
+            <div ng-controller="withoutSyntaxControllerState">
+                {{$parent.name}} - {{name}}
+                <div ng-controller="withoutSyntaxControllerCity">
+                        {{$parent.$parent.name}} - {{$parent.name}} - {{name}}
+                <!-- looks very confusing . All starts with {{name}}. So, use Syntax controller to avoid confusion -->
+                <!-- suppose , now we have 10 levels of nesting of controllers. so ,at the 10th level, if we want to use the
+                1st controller (parent),  then we have to use $parent. 10 times to access the parent controller.
+                Thats why we will use syntax controller and will give alias to all controllers. -->
+                </div>
+            </div>
+        </div>
+        <div ng-controller="syntaxControllerCountry as country">
+                {{country.name}}
+                <div ng-controller="syntaxControllerState as state">
+                    {{country.name}} - {{state.name}}
+                    <div ng-controller="syntaxControllerCity as city">
+                            {{country.name}} - {{state.name}} - {{city.name}}
+                    </div>
+                </div>
+        </div>    
+        <div ng-controller="rootScopeControllerRed">
+            Red Color : {{redColor}} <br>
+            RootScope Color : {{rootScopeColor}} <br>
+            <!-- Green Color : {{greenColor}}  -->
+            Green Color : <span ng-show="greenColor === undefined" style="color: red">Green Color is undefined
+            </span> 
+        </div>    
+        <div ng-controller="rootScopeControllerGreen">
+            Green Color : {{greenColor}} <br>
+            RootScope Color : {{rootScopeColor}} <br>
+            <!-- Red Color : {{redColor}}  -->
+            Red Color : <span ng-show="redColor === undefined" style="color: red">Red Color is undefined
+                </span> 
+        </div>    
+        <table>
+                <tr>
+                        <td colspan="2" class="header">
+                            <h1>Syntax Controller</h1>
+                            <div ng-controller="divController as divCtrl">
+                                {{divCtrl.message}}
+                            </div>
+                        </td>
+                </tr>
+                <tr>
+                    <td class="leftMenu">
+                        <a href="home">Home</a>
+                        <a href="courses">Courses</a>
+                        <a href="students">Students</a>
+                    </td>
+                    <td class="mainContent">
+                        <ng-view></ng-view>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="footer">
+                        <b>Syntax Footer</b>
+                    </td>
+                </tr>
+        </table>
+    </body>
+</html>

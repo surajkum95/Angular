@@ -1,0 +1,8 @@
+{
+    "data": [
+        {"name" : "Suraj", "id" : 1, "gender" : "male", "city" : "blr"},
+        {"name" : "Kumar", "id" : 2, "gender" : "male", "city" : "muz"},
+        {"name" : "Real", "id" : 3, "gender" : "female", "city" : "blr"},
+        {"name" : "Madrid", "id" : 4, "gender" : "female", "city" : "blr"}
+    ]
+}

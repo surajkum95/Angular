@@ -1,0 +1,391 @@
+<html>
+
+	<head>
+		<script src="Scripts/angular.min.js"></script>
+		<link href="Scripts/Style.css" rel="stylesheet" />
+		
+		<script src="Scripts/Script.js"></script>
+		<script src="Scripts/filters.js"></script>
+		<script src="Scripts/service.js"></script>
+	</head>
+	
+	<body ng-app="myModule">
+		<div>
+		{{ 5 + 5 }}
+		{{1 === 2}}
+		{{ {name : "Suraj" , title : "Kumar"}.name }}
+		{{ ['X', 'Y', 'Z'][1] }}
+		</div>
+		<div ng-controller="myController">
+			Name :- {{message}}
+		</div>
+		<div ng-controller="myController2">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Title</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employeedesc in employeeList">
+						<td>{{employeedesc.name}}</td>
+						<td>{{employeedesc.title}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="imageController">
+		<div>
+			Name : {{countryDetails.name}}
+		</div>
+		<div>
+			Capital : {{countryDetails.capital}}
+		</div>
+		<div>
+			Flag : 
+			<!-- <img src="{{ countryDetails.flag }}" style="height :100px; width:200px" 
+			alt = "{{ countryDetails.name + 'n National Flag'}}"/> -->
+			<img ng-src="{{ countryDetails.flag }}" style="height :100px; width:200px" 
+			alt = "{{ countryDetails.name + 'n National Flag'}}"/>
+		</div>
+		</div>
+		<div ng-controller="dataBindingController">
+			<input type="text" ng-model="inputtext"/>
+			<br/>
+			{{inputtext}}
+			<table>
+					<!-- <tr>
+							<td ng-repeat="input in inputValue">
+								Name : <input type="text" ng-model="input.name" />
+							</td>
+					</tr>
+					<tr>
+							<td ng-repeat="input in inputValue">
+								Title : <input type="text" ng-model="input.title" />
+							</td>
+					</tr> -->
+				<tr>
+					<td>
+						Name : <input type="text" ng-model="inputValue.name" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Title : <input type="text" ng-model="inputValue.title" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+					Name : {{inputValue.name}}
+					</td>
+				</tr>
+				<tr>
+					<td>
+					Title : {{inputValue.title}}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div ng-controller="ngRepeatController">
+			<ul>
+				<li ng-repeat="country in countryList">
+					{{country.name}} index= {{$index}}
+					<ul>
+						<li ng-repeat="city in country.cities">
+							{{city.name}} index= {{$index}} parentIndex= {{$parent.$index}}
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div ng-controller="eventhandlerController">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Likes</th>
+						<th>Dislikes</th>
+						<th>Like/Dislike</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="technology in technolgiesList">
+						<td>{{technology.name}}</td>
+						<td>{{technology.likes}}</td>
+						<td>{{technology.dislikes}}</td>
+						<td>
+							<button ng-click="incremenentLikes(technology)">Like</button>
+							<button ng-click="incremenentDisLikes(technology)">Dislike</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="filterController">
+			Rows to Display
+			<input type ="number" step="1" min="0" max="5" value="3" ng-model="rowlimit" />
+			<br/>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Date of Birth</th>
+						<th>Gender</th>
+						<th>Salary</th>
+						<th>Salary</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employee in employeesDataList | limitTo: rowlimit:1">
+						<td>{{employee.name | uppercase}}</td>
+						<td>{{employee.dateOfBirth | date:"yyyy-MM-dd"}}</td>
+						<td>{{employee.gender | lowercase}}</td>
+						<td>{{employee.salary | number:2}}</td>
+						<td>{{employee.salary |currency:"£":1}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="filterSortController">
+			Order By
+			<select ng-model="sortColumnProperty" >
+				<option value='name'>Name</option>
+				<option value='dateOfBirth'>Date of Birth</option>
+				<option value='gender'>Gender</option>
+				<option value='-salary'>Salary</option>
+			</select>
+			<br/>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Date of Birth</th>
+						<th>Gender</th>
+						<th>Salary(Number)</th>
+						<th>Salary(Currency)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employee in employeesListforSorting | orderBy: sortColumnProperty ">
+						<td>{{employee.name | uppercase}}</td>
+						<td>{{employee.dateOfBirth | date:"yyyy-MM-dd"}}</td>
+						<td>{{employee.gender | lowercase}}</td>
+						<td>{{employee.salary | number:2}}</td>
+						<td>{{employee.salary |currency:"£":1}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="sortByHeaderController">
+				<table>
+					<thead>
+						<tr>
+							<th ng-click="sortData('name')">Name
+								<div ng-class="getSortClass('name')"></div>
+							</th>
+							<th ng-click="sortData('dateOfBirth')">Date of Birth
+									<div ng-class="getSortClass('dateOfBirth')"></div>
+							</th>
+							<th ng-click="sortData('gender')">Gender
+									<div ng-class="getSortClass('gender')"></div>
+							</th>
+							<th ng-click="sortData('salary')">Salary
+									<div ng-class="getSortClass('salary')"></div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="employee in employeeHeaderList | orderBy: sortColumn:reverseSort ">
+							<td>{{employee.name | uppercase}}</td>
+							<td>{{employee.dateOfBirth | date:"yyyy-MM-dd"}}</td>
+							<td>{{employee.gender | lowercase}}</td>
+							<td>{{employee.salary | number:2}}</td>
+						</tr>
+					</tbody>
+				</table>
+		</div>
+		<div ng-controller="searchFilterController">
+			<br/>
+			<input type="text" placeholder="Search Name" ng-model="searchKey.name" />
+			<input type="text" placeholder="Search city" ng-model="searchKey.city" />
+			<input type="checkbox" ng-model="exactMatch" /> Enable Exact Match
+			<br/>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Gender</th>
+						<th>Salary</th>
+						<th>City</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employeeData in employeeSearch | filter:searchKey:exactMatch">
+						<td> {{employeeData.name |uppercase}} </td>
+						<td> {{employeeData.gender |lowercase}} </td>
+						<td> {{employeeData.salary |number:2}} </td>
+						<td> {{employeeData.city}} </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="customFilterController">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Gender</th>
+						<th>Salary</th>
+						<th>City</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employeeCustom in customEmployeeList ">
+						<td> {{employeeCustom.name }} </td>
+						<td> {{employeeCustom.gender | genderCustomFilter }} </td>
+						<td> {{employeeCustom.salary |number:2}} </td>
+						<td> {{employeeCustom.city}} </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="hideshowController">
+			<input type="checkbox" ng-model="hideSalary" /> Hide Salary
+			<br/>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Gender</th>
+						<th ng-hide="hideSalary">Salary</th>
+						<th ng-show="hideSalary">Salary</th>
+						<th>City</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="showemployee in hideShowEmployeeList ">
+						<td> {{showemployee.name }} </td>
+						<td> {{showemployee.gender }} </td>
+						<td ng-hide="hideSalary"> {{showemployee.salary |number:2}} </td>
+						<td ng-show="hideSalary"> #### </td>
+						<td> {{showemployee.city}} </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="ngIncludeController">
+			<!-- <div ng-include="'EmployeeTable.html'"></div> -->
+			Select View : 
+			<select ng-model="selectView" ng-click="selectoptions(selectView)">
+				<option value="table">Table</option>
+				<option value="list">List</option>
+			</select>
+			<br/>
+			<table ng-show="tableShow">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Gender</th>
+							<th>Salary</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="employee1 in employeeIncL">
+							<td> {{employee1.name}} </td>
+							<td> {{employee1.gender}} </td>
+							<td> {{employee1.salary}} </td>
+						</tr>
+					</tbody>
+			</table>
+			<div ng-show="listShow">
+			<ul ng-repeat="employeeListInclude in employeeIncL">
+				<li>{{employeeListInclude.name}}</li>
+					<ul >
+						<li> {{employeeListInclude.gender}} </li>
+						<li> {{employeeListInclude.salary}} </li>
+					</ul>
+			</ul>
+			</div>			
+		</div>
+		<div ng-controller="httpServiceController">
+			{{error}}
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Title</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="employee2 in employeeHttpService.info">
+						<td> {{employee2.name}} </td>
+						<td> {{employee2.title}} </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="customServiceController">
+			<table>
+				<tbody>
+					<tr>
+						<th>Input</th>
+						<th>
+							<input type="text" ng-model="input" />
+						</th>
+					</tr>
+					<tr>
+						<th>Output</th>
+						<th>
+							<input type="text" ng-model="output" />
+						</th>
+					</tr>
+					<tr>
+						<input type="button" value="Spacify" ng-click="transformString(input)" />
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+		<div ng-controller="dependencyInjectionController">
+				<table>
+					<tbody>
+						<tr>
+							<th>Input</th>
+							<th>
+								<input type="text" ng-model="input1" />
+							</th>
+						</tr>
+						<tr>
+							<th>Output</th>
+							<th>
+								<input type="text" ng-model="output1" />
+							</th>
+						</tr>
+						<tr>
+							<th>
+							<input type="button" value="Spacify" ng-click="transformStringX(input1)" />
+							</th>
+						</tr>
+						
+					</tbody>
+				</table>
+		</div>
+		<div ng-control="anchorScrollController">
+			<button id="top" ng-click="scrollTo('bottom')">Go to bottom</button>
+			<div>Some Stuffs</div>
+			<button id="bottom" ng-click="scrollTo('top')">Go to top</button>
+		</div>
+		<script>
+		
+			var add = function(x,y){
+				return x + y;
+			}
+			
+			console.log(add(2,3));
+		
+		</script>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,11 @@
+<h1>List of Students({{studentTotals}})</h1> <br>
+
+<input type="text" ng-model="studentName" placeholder="Search Student ..." />
+<button ng-click="searchStudent()">Search</button>
+<button ng-click="refreshStudentDetails()">Refresh</button>
+<ul ng-repeat="student in students">
+   <!-- <a ui-sref="studentById({getId : student.id})"> -->
+        <a ui-sref="studentParent.studentById({getId : student.id})">
+    <li>{{student.name}}</li>
+    </a>
+</ul>
